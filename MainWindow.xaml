@@ -488,12 +488,15 @@
                 </TabItem>
 
             </TabControl>
-            <StatusBar Background="#FF02A5E2" Visibility="Visible" Height="30">
-                <DockPanel>
-                    <Label x:Name="status" Content="{Binding status, BindsDirectlyToSource=True, Mode=OneWay, NotifyOnSourceUpdated=True}"  Foreground="White" Padding="5,3,5,3" DockPanel.Dock="Left"/>
+            <Grid Background="#FF02A5E2" Visibility="Visible" Height="30" >
+                <DockPanel LastChildFill="False" Width="270" Margin="0,0,0,0" >
+                    <Label x:Name="status" Content="{Binding status, BindsDirectlyToSource=True, Mode=OneWay, NotifyOnSourceUpdated=True}"  Foreground="White" Padding="5,3,5,3" 
+                           DockPanel.Dock="Left" HorizontalAlignment="Left" FontFamily="Roboto Light" DataContextChanged="status_DataContextChanged" VerticalAlignment="Center"/>
+                    <Label x:Name="stat_action" Content="Pause ||" HorizontalAlignment="Right" DockPanel.Dock="Right" Foreground="#FFE2E2E2" Margin="0" VerticalAlignment="Center"
+                           FontFamily="Roboto Light" Visibility="Visible" MouseLeftButtonUp="stat_action_MouseLeftButtonUp" Cursor="Hand" Background="#FF0284C1" Padding="12,5"/>
 
                 </DockPanel>
-            </StatusBar>
+            </Grid>
 
 
         </StackPanel>

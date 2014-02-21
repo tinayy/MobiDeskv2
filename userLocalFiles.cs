@@ -69,47 +69,69 @@ namespace Mobideskv2
             String dir = Properties.Settings.Default.directorypath;
             String[] files = getlocalfilesfullpath();
             List <string> nFiles = new List<string>();
+
+            Console.WriteLine("GET LOCAL FILES");
             try
             {
-                if(Properties.Settings.Default.lastupdate!=""){
-                    foreach(String f in files){
-                        _rcs.status = f;
-                        Console.WriteLine(f);
-                        FileInfo fileInf = new FileInfo(f);
-                        DateTime CreationTime = fileInf.CreationTime;
-                        DateTime LastWrite = fileInf.LastWriteTime;
-                        DateTime lastUpdate = DateTime.ParseExact(Properties.Settings.Default.lastupdate, "MM/dd/yyyy HH:mm:ss tt",System.Globalization.CultureInfo.InvariantCulture);
-                        int compare = DateTime.Compare(lastUpdate,CreationTime);
-                        if(compare < 0){
-                            Console.WriteLine("Creation Time newer.Add to localFiles List: "+f);
-                            nFiles.Add(f);
-                        }
-                        else if(compare > 0){
-                            int lw = DateTime.Compare(lastUpdate,LastWrite);
-                            if(lw < 0){
-                                Console.WriteLine("LastWrite Time newer.Add to localFiles List: " + f);
+                try
+                {
+                    if (Properties.Settings.Default.lastupdate != "")
+                    {
+                        Console.WriteLine("LAST UPDATE NOT EMPTY");
+                        foreach (String f in files)
+                        {
+                            _rcs.status = f;
+                            //Console.WriteLine(f);
+                            FileInfo fileInf = new FileInfo(f);
+                            DateTime CreationTime = fileInf.CreationTime;
+                            DateTime LastWrite = fileInf.LastWriteTime;
+                            DateTime lastUpdate = DateTime.ParseExact(Properties.Settings.Default.lastupdate, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture);
+                            int compare = DateTime.Compare(lastUpdate, CreationTime);
+                            Console.WriteLine("Compare result: "+compare);
+                            if (compare < 0)
+                            {
+                                Console.WriteLine("Creation Time newer.Add to localFiles List: " + f);
                                 nFiles.Add(f);
                             }
+                            else if (compare > 0)
+                            {
+                                int lw = DateTime.Compare(lastUpdate, LastWrite);
+                                if (lw < 0)
+                                {
+                                    Console.WriteLine("LastWrite Time newer.Add to localFiles List: " + f);
+                                    nFiles.Add(f);
+                                }
+                                else if(lw > 0)
+                                {
+                                    Console.WriteLine("LastWrite Time older.");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Same dateTime: " + f);
+                            }
+                            //nFiles.Add(f);
                         }
-                        //nFiles.Add(f);
                     }
-                }
-                else
-                {
-                    foreach (String f in files)
+                    else
                     {
-                        nFiles.Add(f);
+                        Console.WriteLine("No last update. Get all local files ");
+                        foreach (String f in files)
+                        {
+                            nFiles.Add(f);
+                        }
+                    }
+                    files = nFiles.ToArray();
+                }
+                finally { 
+                    for (int cnt = 0; cnt != files.Length; cnt++)
+                    {
+
+                        files[cnt] = files[cnt].Replace(dir, "");
+                        Console.WriteLine(files[cnt]);
+
                     }
                 }
-                files = nFiles.ToArray();
-
-                for (int cnt = 0; cnt != files.Length; cnt++)
-                {
-
-                    files[cnt] = files[cnt].Replace(dir, "");
-
-                }
-                 
                 return files;
             }
             catch (Exception e)

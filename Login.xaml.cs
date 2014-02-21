@@ -68,6 +68,9 @@ namespace Mobideskv2
         private void verifyuser_RunWorkerCompleted(object sender,RunWorkerCompletedEventArgs e)
         {
             loader.Visibility = Visibility.Hidden;
+            email.IsEnabled = false;
+            pword.IsEnabled = false;
+            login_btn.IsEnabled = false;
             switch(text){
                 case "valid":
                     MessageBox.Show(String.Format("User type: {0}\nMax size: {1}",Properties.Settings.Default.usertype,Properties.Settings.Default.maxsize));
@@ -107,6 +110,9 @@ namespace Mobideskv2
             prompt.Visibility = Visibility.Hidden;
             usr_email = email.Text;
             usr_pword = pword.Password;
+            email.IsEnabled = false;
+            pword.IsEnabled = false;
+            login_btn.IsEnabled = false;
 
             if (usr_email.Equals("") || usr_pword.Equals(""))
             {

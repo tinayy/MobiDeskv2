@@ -71,12 +71,11 @@ namespace Mobideskv2
         private BackgroundWorker update = new BackgroundWorker();
         private System.Windows.Forms.FolderBrowserDialog browserdialog = new System.Windows.Forms.FolderBrowserDialog();
         private messageBox msgbox = new messageBox();
-        private bool isNetworkAvailable;
       
-        initset ini = new initset();
-        userdevice dvc = new userdevice();
-        objects obj = new objects();
-        sync sync = new sync();
+        private initset ini = new initset();
+        private userdevice dvc = new userdevice();
+        private objects obj = new objects();
+        private sync sync = new sync();
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
@@ -175,7 +174,8 @@ namespace Mobideskv2
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             directorypath.IsEnabled = false;
-            compname.IsEnabled = false; 
+            compname.IsEnabled = false;
+            Save.IsEnabled = false;
             loader.Visibility = Visibility.Visible;
             
             //if selected path is different from saved path prompt user files will be moved
@@ -185,6 +185,7 @@ namespace Mobideskv2
         
         private void settings_DoWork(object sender, DoWorkEventArgs e)
         {
+           
             if(ini.settings("createSet","")){
                 userLocalFiles create = new userLocalFiles();
                 create.createlocalFolder();
@@ -198,16 +199,33 @@ namespace Mobideskv2
         {
             directorypath.IsEnabled = true;
             compname.IsEnabled = true;
+            Save.IsEnabled = true;
             loader.Visibility = Visibility.Collapsed;
             prompt.Visibility = Visibility.Visible;
             watcher.Path = Properties.Settings.Default.directorypath.Replace("\\", "\\\\");
+            Thread.Sleep(2000);
+            pane.SelectedItem = overview_pane;
             update.RunWorkerAsync("0");
         }
 
         private void update_DoWork(object sender, DoWorkEventArgs e)
         {
-            String op = (String)e.Argument;
-            sync.update(op);
+            BackgroundWorker bwAsync = sender as BackgroundWorker;
+            if(bwAsync.CancellationPending){
+                Thread.Sleep(1200);
+                e.Cancel = true;
+                return;
+            }
+
+            try
+            {
+                String op = (String)e.Argument;
+                _rcs.status = "Updating Files";
+                sync.update(op);
+            }
+            catch(Exception ex){
+                Console.WriteLine(ex);
+            }
            
         }
 
@@ -220,6 +238,11 @@ namespace Mobideskv2
 
         private void update_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if(e.Cancelled){
+                _rcs.status = "Paused Syncing";
+            }
+
+            _rcs.status = "Sync Completed";
             MessageBox.Show("Done");
             watcher.EnableRaisingEvents = true;
             updatePanelVisible(0);
@@ -312,12 +335,34 @@ namespace Mobideskv2
             update.RunWorkerAsync("3");
         }
 
-        
-
-
         private void Label_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             pane.SelectedItem = overview_pane;
+        }
+
+        private void enablePause()
+        {
+            stat_action.Content = "Pause ||";
+            stat_action.Visibility = Visibility.Visible;
+        }
+
+        private void stat_action_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if(this.Content.Equals("Pause ||")){
+                if(update.IsBusy){
+                update.CancelAsync();
+                }
+            }
+
+        }
+
+        private void status_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            
+                MessageBox.Show("HEHE");
+                stat_action.Content = "Pause ||";
+                stat_action.Visibility = Visibility.Visible;
+            
         }
         
     }

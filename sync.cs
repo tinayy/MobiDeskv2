@@ -14,11 +14,11 @@ namespace Mobideskv2
     {
         ftp ftp = new ftp();
         objects obj = new objects();
-        bind bind = new bind();
         log log = new log();
         httprequest request = new httprequest();
         userServerFiles serverFiles = new userServerFiles();
         userLocalFiles localFiles = new userLocalFiles();
+       
         
 
         private decimal frsize()
@@ -111,11 +111,11 @@ namespace Mobideskv2
             {
                 if(files.Length>0){
                     Console.WriteLine("Array file length: " + files.Length);
-                    bind.status = "Uploading";
+                   
                     //Console.WriteLine("Object status: "+bind.status);
                     foreach(String f in files){
-                        bind.file = f;
-                        Console.WriteLine("Object status and file:{0} {1} ",bind.status,bind.file);
+                        
+                       
                         //obj.file = f;
                         String fl = Properties.Settings.Default.directorypath+"\\"+f ;
                         Console.WriteLine("File to Upload: " + fl);
@@ -183,8 +183,7 @@ namespace Mobideskv2
             {
                 Console.WriteLine("\n--Download Start--");
                 Console.WriteLine("Download Array :" + files.Length);
-                bind.status = "Downloading";
-                Console.WriteLine("Object status: " + bind.status);
+               
                 
                 foreach (String f in files)
                 {
