@@ -54,7 +54,6 @@ namespace Mobideskv2
                 newfilename = newfilename.Replace("\\\\", "\\");
                 String withoutRoot = localFiles.getfilewithoutroot(filename);
 
-
                 String uid = Properties.Settings.Default.uid;
                 Console.WriteLine("Changetype: " + changetype);
 
@@ -148,10 +147,22 @@ namespace Mobideskv2
                 String[] q = queueFrmServer.Dequeue().Split('?');
                 String changetype = q[0];
                 String dir =  q[1];
-                String newDir = q[2];
+                String oldDir = q[2];
 
+                switch(changetype){
+                    case "ctd":
 
+                    break;
 
+                    case "rnm":
+                    break;
+
+                    case "dlt":
+                    break;
+
+                    case "updt":
+                    break;
+                }
 
             }
             while(queueFrmServer.Count() != 0);

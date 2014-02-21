@@ -92,7 +92,8 @@
     <Compile Include="messageBox.xaml.cs">
       <DependentUpon>messageBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="monitorServer.cs" />
+    <Compile Include="monitorLocal.cs" />
+    <Compile Include="monitorChanges.cs" />
     <Compile Include="notifyTray.xaml.cs">
       <DependentUpon>notifyTray.xaml</DependentUpon>
     </Compile>

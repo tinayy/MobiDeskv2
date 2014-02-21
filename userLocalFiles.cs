@@ -80,7 +80,7 @@ namespace Mobideskv2
                         Console.WriteLine("LAST UPDATE NOT EMPTY: " + Properties.Settings.Default.lastupdate);
                         foreach (String f in files)
                         {
-                            _rcs.status = f;
+                            
                             //Console.WriteLine(f);
                             FileInfo fileInf = new FileInfo(f);
                             DateTime CreationTime = fileInf.CreationTime;

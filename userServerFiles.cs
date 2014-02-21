@@ -27,6 +27,16 @@ namespace Mobideskv2
             return res;
         }
 
+        public void updateSizeCount()
+        {
+            Properties.Settings.Default.totalb = 0;
+            Properties.Settings.Default.total = 0;
+            Properties.Settings.Default.Save();
+            initset settings = new initset();
+            settings.updatesize(getTotalSize(Properties.Settings.Default.uid));
+
+        }
+
         public void createServerFolder()
         {
             server.createFolder("");
@@ -44,6 +54,7 @@ namespace Mobideskv2
             
             String reqData = String.Format("action=getChanges&usrid={0}&lastupdate={1}", Properties.Settings.Default.uid, Properties.Settings.Default.lastupdate);
              String[] serverfileChanges = request.Onrequest("userFile.php", reqData).Trim().Split('\n');
+            
              return serverfileChanges;
            
         }
@@ -57,5 +68,7 @@ namespace Mobideskv2
                 value = _getserverChanges();
             }
         }
+
+        
     }
 }

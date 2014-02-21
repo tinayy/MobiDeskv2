@@ -494,7 +494,7 @@
                            DockPanel.Dock="Left" HorizontalAlignment="Left" FontFamily="Roboto Light" DataContextChanged="status_DataContextChanged" VerticalAlignment="Center"/>
                     <Label x:Name="stat_action" Content="Pause" HorizontalAlignment="Right" DockPanel.Dock="Right" Foreground="#FFE2E2E2" Margin="0" VerticalAlignment="Center"
                            FontFamily="Roboto Light" Visibility="Visible" MouseLeftButtonUp="stat_action_MouseLeftButtonUp" Cursor="Hand" Padding="12,5" Background="{x:Null}" BorderBrush="#FF0C98CD" BorderThickness="2,0,0,0"/>
-
+                    <Label x:Name="tryIt" Content="{Binding tryIt}" />
                 </DockPanel>
             </Grid>
 
