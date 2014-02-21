@@ -28,7 +28,7 @@ namespace Mobideskv2
     /// </summary>
     public partial class MainWindow : Window
     {
-       public bind _rcs;
+       
         public MainWindow()
         {
             InitializeComponent();
@@ -61,10 +61,9 @@ namespace Mobideskv2
             _rcs = new bind();
             this.DataContext = _rcs;
             checkConn.StartCheck();
-            _rcs.status = "HAHAHA";
             
         }
-
+        private bind _rcs;
         private FileSystemWatcher watcher = new FileSystemWatcher();
         private BackgroundWorker settings = new BackgroundWorker();
         private BackgroundWorker queue = new BackgroundWorker();
@@ -243,7 +242,7 @@ namespace Mobideskv2
             updateCompleted();
            
         }
-
+        
         private void updateCompleted()
         {
             _rcs.status = "Sync Completed";
@@ -251,15 +250,26 @@ namespace Mobideskv2
             watcher.EnableRaisingEvents = true;
             updatePanelVisible(0);
             sync.date();
-
-            if(!monitorServer.isTimerEnabled){
-                Console.WriteLine("Timer is not enabled. Enable timer");
-                monitorServer.start();
+            
+            if(!monitorChanges.isServerMonitoringEnabled){
+                Console.WriteLine("Server monitoring is not enabled. Enable timer");
+                monitorChanges.start_srv();
             }
             else
             {
-                Console.WriteLine("Timer is currently enabled");
+                Console.WriteLine("Server monitoring is currently enabled");
             }
+
+            if (!monitorChanges.isLocalMonitoringEnabled)
+            {
+                Console.WriteLine("Local monitoring is not enabled. Enable timer");
+                monitorChanges.start_loc();
+            }
+            else
+            {
+                Console.WriteLine("Local monitoring is currently enabled");
+            }
+          
         }
 
         private void bind()

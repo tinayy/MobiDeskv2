@@ -31,11 +31,27 @@ namespace Mobideskv2
 
             if (isNetworkAvailable)
             {
+                if (!monitorChanges.isServerMonitoringEnabled && Properties.Settings.Default.lastupdate!="")
+                {
+                    userServerFiles srvr = new userServerFiles();
+                    srvr.updateSizeCount();
+                    monitorChanges.start_srv();
+                    
+                }
                 //total count & size
                 //check for serverChanges
+            }
+            else
+            {
+                if(monitorChanges.isServerMonitoringEnabled){
+                    monitorChanges.stop_srv();
+                   
+                }
             }
             Console.WriteLine("Network Availability: " + isNetworkAvailable);
             
         }
+
+       
     }
 }
