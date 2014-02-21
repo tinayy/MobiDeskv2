@@ -36,6 +36,13 @@ namespace Mobideskv2
             
         }
 
+        private static long getFilesize(String fpath)
+        {
+            FileInfo fileinfo = new FileInfo(fpath);
+            long size = fileinfo.Length;
+            return size;
+        }
+
         private static void localToServer()
         {
             userLocalFiles localFiles = new userLocalFiles();
@@ -45,7 +52,7 @@ namespace Mobideskv2
             userLocalFiles ul = new userLocalFiles();
             do
             {
-
+                Console.WriteLine("Local to server changes");
                 String[] q = queue.Dequeue().Split('?');
                 String changetype = q[0];
                 String filename = q[1];
@@ -56,21 +63,20 @@ namespace Mobideskv2
 
                 String uid = Properties.Settings.Default.uid;
                 Console.WriteLine("Changetype: " + changetype);
+                
 
-
-                if (ul.isFile(filename))
+                if (ul.isFile(newfilename != "" ? newfilename : filename))
                 {
                     Console.WriteLine("It is file: " + withoutRoot);
-                    FileInfo fileinfo = new FileInfo(filename);
-                    long size = fileinfo.Length;
+                   
                     switch (changetype)
                     {
 
                         case "ctd":
-
+                           
                             Console.WriteLine(Properties.Settings.Default.directorypath);
                             Console.WriteLine("File to Create: " + withoutRoot);
-                            String reqData = String.Format("action=addFile&usrid={0}&dir={1}&fileSize={2}", uid, withoutRoot, size);
+                            String reqData = String.Format("action=addFile&usrid={0}&dir={1}&fileSize={2}", uid, withoutRoot, getFilesize(withoutRoot));
                             filename = filename.Replace("\\", "\\\\");
                             if (ftp.upload(filename, withoutRoot))
                             {
@@ -79,20 +85,25 @@ namespace Mobideskv2
                             break;
 
                         case "dlt":
-
+                            
                             Console.WriteLine("File to delete: " + withoutRoot);
                             reqData = String.Format("action=deleteFile&usrid={0}&dir={1}", uid, withoutRoot);
                             Console.WriteLine(request.Onrequest("userFile.php", reqData));
-                            updateSize.updatesize(-(size));
+                            updateSize.updatesize(-(getFilesize(withoutRoot)));
                             //deduct size
                             break;
 
                         case "rnm":
-                            String withoutRoot2 = localFiles.getfilewithoutroot(newfilename);
+                            String withoutRoot2 = localFiles.getfilewithoutroot(newfilename).Replace("\\","\\\\");
+                            withoutRoot = withoutRoot.Replace("\\","\\\\");
                             Console.WriteLine("File to rename: " + withoutRoot + "\nRename To: " + withoutRoot2);
-                            ftp.rename(withoutRoot2, withoutRoot);
-                            reqData = String.Format("action=renameFile&usrid={0}&dir={1}&renameTo={2}", uid, withoutRoot, withoutRoot2);
-                            Console.WriteLine(request.Onrequest("userFile.php", reqData));
+                            
+                                ftp.rename(withoutRoot2, withoutRoot);
+                            
+                                reqData = String.Format("action=renameFile&usrid={0}&dir={1}&renameTo={2}", uid, withoutRoot, withoutRoot2);
+                                Console.WriteLine(request.Onrequest("userFile.php", reqData));
+                            
+                           
                             break;
 
                         case "chg":

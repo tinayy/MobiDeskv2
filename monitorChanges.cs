@@ -46,6 +46,7 @@ namespace Mobideskv2
             String[] changes = srvrFiles.getserverChanges;
             if(changes.Length>0 && !changes.Contains("")){
                 stop_srv();
+                stop_loc();
                 Console.WriteLine("There are changes");
                 QueueChanges(changes);
             }
@@ -92,7 +93,12 @@ namespace Mobideskv2
             if (objects.queue.Count > 0)
             {
                 monitorChanges.stop_loc();
+                monitorChanges.stop_srv();
                 Console.WriteLine("Changes on local");
+            }
+            else
+            {
+                Console.WriteLine("No changes on local");
             }
         }
       

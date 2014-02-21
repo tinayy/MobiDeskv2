@@ -33,8 +33,7 @@ namespace Mobideskv2
         public string update(String ans)
         {
             System.Windows.Forms.MessageBox.Show("Get Files: "+ans);
-            String[] localfiles = localFiles.getlocalfileswithoutroot();
-            String[] serverfiles = serverFiles.getserverFiles();
+            
             //String[] serverfilesToDelete = serverFiles.getserverFilesToDelete();
 
             Console.WriteLine("Last Update: "+Properties.Settings.Default.lastupdate);
@@ -43,24 +42,29 @@ namespace Mobideskv2
 
             if( ans== "0"){
                     Console.WriteLine("Sync");
+                    String[] localfiles = localFiles.getlocalfileswithoutroot();
+                    String[] serverfiles = serverFiles.getserverFiles();
                     syncOn(localfiles, serverfiles);
                     return "done";
                     //sync
             }
             else if(ans =="1"){
                      Console.WriteLine("\n---UploadStart---");
+                     String[] localfiles = localFiles.getlocalfileswithoutroot();
                     uploadtoServer(localfiles);
                     Console.WriteLine("---UploadEnd---\n");
                     return "done";
             }
             else if (ans == "2")
             {
+                String[] serverfiles = serverFiles.getserverFiles();
                 downloadtoLocal(serverfiles);
                 Console.WriteLine("---DownloadEnd---\n");
                     return "done";
             }
             else if (ans == "3")
             {
+                Console.WriteLine("Process Queue");
                 Console.WriteLine("---UpdateStart---\n");
                 objects.processQueue("lts");
                 Console.WriteLine("---UpdateEnd---\n");

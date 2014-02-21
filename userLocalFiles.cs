@@ -155,8 +155,6 @@ namespace Mobideskv2
 
         public  String getfilewithoutroot(String f)
         {
-            FileInfo fileInf = new FileInfo(f);
-            String fileWithoutRoot = fileInf.Directory.ToString();
             
             String file = f.Replace(Properties.Settings.Default.directorypath,"");
             return file;
