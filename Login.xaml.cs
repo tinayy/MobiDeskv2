@@ -80,6 +80,9 @@ namespace Mobideskv2
                 break;
 
                 case "invalid":
+                    email.IsEnabled = true;
+                    pword.IsEnabled = true;
+                    login_btn.IsEnabled = true;
                     prompt.Visibility = Visibility.Visible;
                     prompt.Content = "Email or password is invalid";                   
                 break;

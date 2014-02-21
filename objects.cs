@@ -46,7 +46,7 @@ namespace Mobideskv2
             do
             {
 
-                String[] q = queue.Dequeue().Split('%');
+                String[] q = queue.Dequeue().Split('?');
                 String changetype = q[0];
                 String filename = q[1];
                 String newfilename = q[2];
@@ -145,7 +145,7 @@ namespace Mobideskv2
         private static void serverToLocal()
         {
             do{
-                String[] q = queueFrmServer.Dequeue().Split('%');
+                String[] q = queueFrmServer.Dequeue().Split('?');
                 String changetype = q[0];
                 String dir =  q[1];
                 String newDir = q[2];

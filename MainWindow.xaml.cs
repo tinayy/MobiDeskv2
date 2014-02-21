@@ -28,7 +28,7 @@ namespace Mobideskv2
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly bind _rcs;
+       public bind _rcs;
         public MainWindow()
         {
             InitializeComponent();
@@ -111,8 +111,6 @@ namespace Mobideskv2
                 
                 //pane.SelectedItem = settings_pane;
             }
-
-            //checkNetwork();
             
         }
 
@@ -242,11 +240,26 @@ namespace Mobideskv2
                 _rcs.status = "Paused Syncing";
             }
 
+            updateCompleted();
+           
+        }
+
+        private void updateCompleted()
+        {
             _rcs.status = "Sync Completed";
             MessageBox.Show("Done");
             watcher.EnableRaisingEvents = true;
             updatePanelVisible(0);
             sync.date();
+
+            if(!monitorServer.isTimerEnabled){
+                Console.WriteLine("Timer is not enabled. Enable timer");
+                monitorServer.start();
+            }
+            else
+            {
+                Console.WriteLine("Timer is currently enabled");
+            }
         }
 
         private void bind()
@@ -273,7 +286,7 @@ namespace Mobideskv2
 
         private void watcher_Changed(object sender, FileSystemEventArgs e)
         {
-            objects.queue.Enqueue("chg%" + e.FullPath + "%" + "");
+            objects.queue.Enqueue("chg?" + e.FullPath + "?" + "");
             Console.WriteLine("Changes in directory " + e.FullPath);
             updatePanelVisible(1);
             
@@ -281,7 +294,7 @@ namespace Mobideskv2
 
         private void watcher_Created(object sender, FileSystemEventArgs e)
         {
-            objects.queue.Enqueue("ctd%"+ e.FullPath + "%" + "");
+            objects.queue.Enqueue("ctd?"+ e.FullPath + "?" + "");
             Console.WriteLine("ADDED TO QUEUE: ctd|" + e.FullPath + "|" + "");
 
             updatePanelVisible(1);
@@ -289,7 +302,7 @@ namespace Mobideskv2
 
         private void watcher_Deleted(object sender, FileSystemEventArgs e)
         {
-            objects.queue.Enqueue("dlt%" + e.FullPath + "%" + "");
+            objects.queue.Enqueue("dlt?" + e.FullPath + "?" + "");
             Console.WriteLine("ADDED TO QUEUE: dlt|" + e.FullPath + "|" + "");
 
             updatePanelVisible(1);
@@ -297,7 +310,7 @@ namespace Mobideskv2
 
         private void watcher_Renamed(object sender, RenamedEventArgs e)
         {
-            objects.queue.Enqueue("rnm%" + e.OldFullPath + "%" + e.FullPath);
+            objects.queue.Enqueue("rnm?" + e.OldFullPath + "?" + e.FullPath);
             Console.WriteLine("ADDED TO QUEUE:  rnm|" + e.OldFullPath + "|" + e.FullPath);
 
             updatePanelVisible(1);

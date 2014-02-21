@@ -326,11 +326,11 @@
                 <Button DockPanel.Dock="Right" Content="-" FontSize="30" FontWeight="ExtraBlack" Foreground="#FF3C3C3C" 
                         Background="Transparent" BorderBrush="{x:Null}" Margin="0,0,10,0" Click="hide_Click"/>
             </DockPanel>
-            
+
             <TabControl x:Name="pane" Height="346" BorderBrush="{x:Null}" Padding="0">
                 <TabItem x:Name="settings_pane" Header="Settings" Visibility="Collapsed" Padding="6,2" BorderBrush="{x:Null}">
                     <Grid Background="White">
-                        <StackPanel Orientation="Vertical" >   
+                        <StackPanel Orientation="Vertical" >
                             <DockPanel Margin="0,20,0,10" >
                                 <Label Content="Settings" Height="35" 
                                    FontSize="18" Foreground="#FF299AB6" 
@@ -374,7 +374,7 @@
                 </TabItem>
                 <TabItem x:Name="overview_pane" Header="Overview" Visibility="Collapsed">
                     <Grid Background="Transparent">
-                        
+
                         <StackPanel Orientation="Vertical" Margin="0,0,0,0" >
                             <DockPanel>
                                 <Label x:Name="name_lbl" 
@@ -443,7 +443,7 @@
                             </StackPanel>
                             <ProgressBar Margin="0,5,0,10" Height="12" Foreground="#FF30B3E4" Background="#FFE8E8E8" BorderBrush="#FFE1E3E4" Value="{Binding perc, Source={x:Static p:Settings.Default}}" />
 
-                            
+
                             <DockPanel Height="40" LastChildFill="False" Background="White"/>
 
                             <StackPanel x:Name="updatePanel" Height="40" Orientation="Horizontal" Visibility="Collapsed">
@@ -468,13 +468,13 @@
 
                             </DockPanel>
                             <DockPanel>
-                            <Label Content="Personal Information" Margin="5,0,0,0" FontFamily="Roboto Light" Foreground="#FF9E9D9D" FontSize="14" 
+                                <Label Content="Personal Information" Margin="5,0,0,0" FontFamily="Roboto Light" Foreground="#FF9E9D9D" FontSize="14" 
                                    VerticalAlignment="Center"/>
-                            <Label HorizontalAlignment="Right" VerticalContentAlignment="Center" DockPanel.Dock="Right" Cursor="Hand" ToolTip="Edit Account" Margin="0,0,10,0">
-                                <Hyperlink FontFamily="Roboto Light" FontSize="13" Foreground="#FF515151" TextDecorations="Underline" NavigateUri="http://mobidesk.net/registration.php" RequestNavigate="Hyperlink_RequestNavigate">
-                                    Edit
-                                </Hyperlink>
-                            </Label>
+                                <Label HorizontalAlignment="Right" VerticalContentAlignment="Center" DockPanel.Dock="Right" Cursor="Hand" ToolTip="Edit Account" Margin="0,0,10,0">
+                                    <Hyperlink FontFamily="Roboto Light" FontSize="13" Foreground="#FF515151" TextDecorations="Underline" NavigateUri="http://mobidesk.net/registration.php" RequestNavigate="Hyperlink_RequestNavigate">
+                                        Edit
+                                    </Hyperlink>
+                                </Label>
                             </DockPanel>
                             <Label Content="{Binding uemail, Source={x:Static p:Settings.Default}}" Margin="5,0,0,0" FontFamily="Roboto Light" FontSize="14" Foreground="#606060" />
                             <Label Content="{Binding usertype,  Source={x:Static p:Settings.Default}}" Margin="5,0,0,0" FontFamily="Roboto Light" FontSize="14" Foreground="#606060" />
@@ -492,8 +492,8 @@
                 <DockPanel LastChildFill="False" Width="270" Margin="0,0,0,0" >
                     <Label x:Name="status" Content="{Binding status, BindsDirectlyToSource=True, Mode=OneWay, NotifyOnSourceUpdated=True}"  Foreground="White" Padding="5,3,5,3" 
                            DockPanel.Dock="Left" HorizontalAlignment="Left" FontFamily="Roboto Light" DataContextChanged="status_DataContextChanged" VerticalAlignment="Center"/>
-                    <Label x:Name="stat_action" Content="Pause ||" HorizontalAlignment="Right" DockPanel.Dock="Right" Foreground="#FFE2E2E2" Margin="0" VerticalAlignment="Center"
-                           FontFamily="Roboto Light" Visibility="Visible" MouseLeftButtonUp="stat_action_MouseLeftButtonUp" Cursor="Hand" Background="#FF0284C1" Padding="12,5"/>
+                    <Label x:Name="stat_action" Content="Pause" HorizontalAlignment="Right" DockPanel.Dock="Right" Foreground="#FFE2E2E2" Margin="0" VerticalAlignment="Center"
+                           FontFamily="Roboto Light" Visibility="Visible" MouseLeftButtonUp="stat_action_MouseLeftButtonUp" Cursor="Hand" Padding="12,5" Background="{x:Null}" BorderBrush="#FF0C98CD" BorderThickness="2,0,0,0"/>
 
                 </DockPanel>
             </Grid>

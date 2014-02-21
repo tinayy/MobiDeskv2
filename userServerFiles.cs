@@ -38,5 +38,24 @@ namespace Mobideskv2
             String[] serverfiles = request.Onrequest("userFile.php",reqData).Trim().Split('\n');
             return serverfiles;
         }
+
+        private  String[] _getserverChanges()
+        {
+            
+            String reqData = String.Format("action=getChanges&usrid={0}&lastupdate={1}", Properties.Settings.Default.uid, Properties.Settings.Default.lastupdate);
+             String[] serverfileChanges = request.Onrequest("userFile.php", reqData).Trim().Split('\n');
+             return serverfileChanges;
+           
+        }
+
+        public String[] getserverChanges
+        {
+            get
+            { return _getserverChanges(); }
+            set
+            {
+                value = _getserverChanges();
+            }
+        }
     }
 }

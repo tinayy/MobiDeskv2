@@ -35,6 +35,7 @@ namespace Mobideskv2
                 //check for serverChanges
             }
             Console.WriteLine("Network Availability: " + isNetworkAvailable);
+            
         }
     }
 }

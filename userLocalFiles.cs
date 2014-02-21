@@ -77,7 +77,7 @@ namespace Mobideskv2
                 {
                     if (Properties.Settings.Default.lastupdate != "")
                     {
-                        Console.WriteLine("LAST UPDATE NOT EMPTY");
+                        Console.WriteLine("LAST UPDATE NOT EMPTY: " + Properties.Settings.Default.lastupdate);
                         foreach (String f in files)
                         {
                             _rcs.status = f;
