@@ -370,8 +370,8 @@ namespace Mobideskv2
 
         private void enablePause()
         {
-            stat_action.Content = "Pause ||";
-            stat_action.Visibility = Visibility.Visible;
+            //stat_action.Content = "Pause ||";
+            //stat_action.Visibility = Visibility.Visible;
         }
 
         private void stat_action_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -388,8 +388,8 @@ namespace Mobideskv2
         {
             
                 MessageBox.Show("HEHE");
-                stat_action.Content = "Pause ||";
-                stat_action.Visibility = Visibility.Visible;
+//stat_action.Content = "Pause ||";
+              //  stat_action.Visibility = Visibility.Visible;
             
         }
         

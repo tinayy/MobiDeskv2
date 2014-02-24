@@ -39,11 +39,11 @@
                 <TextBox x:Name="email" FontFamily="Roboto Light" FontSize="14" Height="31" TextWrapping="Wrap" Margin="5,0" VerticalContentAlignment="Center" BorderThickness="1,1,1,2" Background="White" Padding="5,0,0,0" Foreground="#FF464545" KeyDown="email_KeyDown"/>
                 <Label Content="Password" FontFamily="Roboto Light" Foreground="#FF504f4f" FontSize="14"/>
                 <PasswordBox x:Name="pword" FontFamily="Roboto Light" FontSize="14" Height="31"  Margin="5,0" VerticalContentAlignment="Center" BorderThickness="1,1,1,2" Background="White" Padding="5,0,0,0" Foreground="#FF272727" KeyDown="pword_KeyDown"/>
-                <Button x:Name="login_btn" Content="Login" BorderThickness="0,0,0,2" Margin="5,20,5,5" BorderBrush="#FF347F9C" Cursor="Hand" Foreground="#FFD4E2E8" Height="40" FontFamily="Roboto" FontSize="15" Click="login_btn_Click" Background="#FF49A1C3" />
+                <Button x:Name="login_btn" Content="Login" BorderThickness="0,0,0,2" Margin="5,20,5,5" BorderBrush="#FF347F9C" Cursor="Hand" Foreground="#FFD4E2E8" Height="40" FontFamily="Roboto" FontSize="15" Click="login_btn_Click" Background="#FF02A5E2" />
 
             </StackPanel>
 
-            <Button Grid.Row="2" Margin="54,5,55,5" BorderThickness="0,0,0,2" Background="#FF49A1C3" BorderBrush="#FF347F9C" Cursor="Hand" Foreground="#FFD4E2E8" MouseEnter="Button_MouseEnter" >
+            <Button Grid.Row="2" Margin="54,5,55,5" BorderThickness="0,0,0,2" Background="#FF02A5E2" BorderBrush="#FF347F9C" Cursor="Hand" Foreground="#FFD4E2E8" MouseEnter="Button_MouseEnter" >
                 <Hyperlink FontFamily="Roboto" FontSize="15" Foreground="#FFF3F3F3" TextDecorations="None" NavigateUri="http://mobidesk.net/registration.php" RequestNavigate="Hyperlink_RequestNavigate">
                     Create Account
                 </Hyperlink>
@@ -51,7 +51,24 @@
 
             <Label Content="or" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" FontFamily="Roboto Light" FontSize="15" Height="30" Margin="147,0,145,175" Width="24" Background="{x:Null}" Grid.RowSpan="2" Foreground="#FF919090"/>
 
-            <Image Grid.Row="1" Source="imgs/headIcon.png" Margin="48,19,48,29" />
+            <DockPanel Grid.Row="1" HorizontalAlignment="Center">
+                <Label MinWidth="40" >
+                    <Label.Background>
+                        <ImageBrush ImageSource="imgs/_icon30.png" Stretch="None"/>
+                    </Label.Background>
+                </Label>
+                <Label Content="MobiDesk" VerticalContentAlignment="Center" Background="{x:Null}" FontFamily="Roboto" FontSize="35" Margin="0,0,0,0" Padding="0,5,5,5">
+                    <Label.Foreground>
+                        <LinearGradientBrush EndPoint="0,1" StartPoint="1,0">
+                            <GradientStop Color="#FF1791BF" Offset="1"/>
+                            <GradientStop Color="#FF6CBAD6"/>
+                            <GradientStop Color="#FF0584B4" Offset="0.5"/>
+                            <GradientStop Color="#FF68B8D6" Offset="0.483"/>
+                        </LinearGradientBrush>
+                    </Label.Foreground>
+                </Label>
+            </DockPanel>
+           
             <DockPanel x:Name="titlebar" LastChildFill="True" Background="#FFF0F0F0" MouseLeftButtonDown="titlebar_MouseLeftButtonDown" >
                 <Button x:Name="close" BorderBrush="{x:Null}" Background="Transparent" 
                     Content="X" Width="40" DockPanel.Dock="Right" 
