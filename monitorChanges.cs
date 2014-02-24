@@ -49,6 +49,7 @@ namespace Mobideskv2
                 stop_loc();
                 Console.WriteLine("There are changes");
                 QueueChanges(changes);
+                objects.processQueue("stl");
             }
             else
             {
@@ -67,7 +68,7 @@ namespace Mobideskv2
             }
             finally
             {
-                //process queue
+                
             }
         }
 
@@ -95,6 +96,9 @@ namespace Mobideskv2
                 monitorChanges.stop_loc();
                 monitorChanges.stop_srv();
                 Console.WriteLine("Changes on local");
+                objects.processQueue("lts");
+                //MainWindow mw = new MainWindow();
+                //mw.updatePanelVisible(1);
             }
             else
             {

@@ -60,7 +60,8 @@ namespace Mobideskv2
 
             _rcs = new bind();
             this.DataContext = _rcs;
-            checkConn.StartCheck();
+            //checkConn.startConnWatch();
+            
             
         }
         private bind _rcs;
@@ -86,7 +87,7 @@ namespace Mobideskv2
         {
             
             Console.WriteLine("Watcher Path: " + Properties.Settings.Default.directorypath.Replace("\\", "\\\\"));
-           
+            checkConn.StartCheck();
             
             var desktopworkingarea = System.Windows.SystemParameters.WorkArea;
             this.Left = desktopworkingarea.Right - this.Width;
@@ -248,11 +249,11 @@ namespace Mobideskv2
             _rcs.status = "Sync Completed";
             MessageBox.Show("Done");
             watcher.EnableRaisingEvents = true;
-            updatePanelVisible(0);
+            //updatePanelVisible(0);
             sync.date();
             
             if(!monitorChanges.isServerMonitoringEnabled){
-                Console.WriteLine("Server monitoring is not enabled. Enable timer");
+               // Console.WriteLine("Server monitoring is not enabled. Enable timer");
                 monitorChanges.start_srv();
             }
             else
@@ -298,7 +299,7 @@ namespace Mobideskv2
         {
             objects.queue.Enqueue("chg?" + e.FullPath + "?" + "");
             Console.WriteLine("Changes in directory " + e.FullPath);
-            updatePanelVisible(1);
+            //updatePanelVisible(1);
             
         }
 
@@ -307,7 +308,7 @@ namespace Mobideskv2
             objects.queue.Enqueue("ctd?"+ e.FullPath + "?" + "");
             Console.WriteLine("ADDED TO QUEUE: ctd|" + e.FullPath + "|" + "");
 
-            updatePanelVisible(1);
+            //updatePanelVisible(1);
         }
 
         private void watcher_Deleted(object sender, FileSystemEventArgs e)
@@ -315,7 +316,7 @@ namespace Mobideskv2
             objects.queue.Enqueue("dlt?" + e.FullPath + "?" + "");
             Console.WriteLine("ADDED TO QUEUE: dlt|" + e.FullPath + "|" + "");
 
-            updatePanelVisible(1);
+            //updatePanelVisible(1);
         }
 
         private void watcher_Renamed(object sender, RenamedEventArgs e)
@@ -323,10 +324,10 @@ namespace Mobideskv2
             objects.queue.Enqueue("rnm?" + e.OldFullPath + "?" + e.FullPath);
             Console.WriteLine("ADDED TO QUEUE:  rnm|" + e.OldFullPath + "|" + e.FullPath);
 
-            updatePanelVisible(1);
+           // updatePanelVisible(1);
         }
 
-        private void updatePanelVisible(int inv)
+        public  void updatePanelVisible(int inv)
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(() =>
             {
@@ -355,7 +356,11 @@ namespace Mobideskv2
 
         private void btn_update_Click(object sender, RoutedEventArgs e)
         {
-            update.RunWorkerAsync("3");
+            if(objects.queueFrmServer.Count>0){
+                objects.processQueue("stl");
+            }
+            updatePanelVisible(0);
+            //update.RunWorkerAsync("3");
         }
 
         private void Label_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

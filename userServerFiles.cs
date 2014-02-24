@@ -16,6 +16,7 @@ namespace Mobideskv2
         public decimal getTotalSize(String uid)
         {
             reqData = "action=getTotalSize&usrid="+uid;
+            Console.WriteLine(request.Onrequest(reqPage, reqData));
             decimal res = decimal.Parse(request.Onrequest(reqPage, reqData));
             return res;
         }

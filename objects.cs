@@ -17,17 +17,19 @@ namespace Mobideskv2
         
         public static void processQueue(String ans)
         {          
-            Console.WriteLine("Start Queue. Count: "+queue.Count());
+            
             switch(ans){
                 case "lts":
                     if (queue.Count() > 0)
                     {
+                        Console.WriteLine("Start Queue. Count: " + queue.Count());
                         localToServer();
                     }
                 break;
                 case "stl":
                     if(queueFrmServer.Count() > 0)
                     {
+                        Console.WriteLine("Start Queue. Count: " + queueFrmServer.Count());
                         serverToLocal();
                     }
                 break;
@@ -63,9 +65,18 @@ namespace Mobideskv2
 
                 String uid = Properties.Settings.Default.uid;
                 Console.WriteLine("Changetype: " + changetype);
-                
+                String check = newfilename != "" ? newfilename : filename;
 
-                if (ul.isFile(newfilename != "" ? newfilename : filename))
+                if (changetype.Equals("dlt"))
+                {
+
+                    Console.WriteLine("File to delete: " + withoutRoot);
+                    withoutRoot = withoutRoot.Replace("\\","\\\\");
+                    String reqData = String.Format("action=deleteFile&usrid={0}&dir={1}", uid, withoutRoot);
+                    Console.WriteLine(request.Onrequest("userFile.php", reqData));
+                }
+
+                else if (ul.isFile(check))
                 {
                     Console.WriteLine("It is file: " + withoutRoot);
                    
@@ -84,17 +95,15 @@ namespace Mobideskv2
                             }
                             break;
 
-                        case "dlt":
-                            
-                            Console.WriteLine("File to delete: " + withoutRoot);
-                            reqData = String.Format("action=deleteFile&usrid={0}&dir={1}", uid, withoutRoot);
-                            Console.WriteLine(request.Onrequest("userFile.php", reqData));
-                            updateSize.updatesize(-(getFilesize(withoutRoot)));
+                        
+                            //updateSize.updatesize(-(getFilesize(withoutRoot)));
                             //deduct size
-                            break;
+                            
 
                         case "rnm":
-                            String withoutRoot2 = localFiles.getfilewithoutroot(newfilename).Replace("\\","\\\\");
+                            
+                            FileInfo fileInf = new FileInfo(newfilename);
+                            String withoutRoot2 = "\\\\"+fileInf.Name;
                             withoutRoot = withoutRoot.Replace("\\","\\\\");
                             Console.WriteLine("File to rename: " + withoutRoot + "\nRename To: " + withoutRoot2);
                             
@@ -137,16 +146,25 @@ namespace Mobideskv2
                             break;
 
                         case "rnm":
-                            String withoutRoot2 = localFiles.getfilewithoutroot(newfilename);
+                            FileInfo fileInf = new FileInfo(newfilename);
+                            String withoutRoot2 = fileInf.Name;
                             Console.WriteLine("Folder to rename: " + withoutRoot + "\nRename To: " + withoutRoot2);
                             ftp.rename(withoutRoot2, withoutRoot);
-                            String reqData = String.Format("action=renameFile&usrid={0}&dir={1}&renameTo={2}&", uid, withoutRoot, withoutRoot2);
-                            Console.WriteLine(request.Onrequest("userFile.php", reqData));
+                            //get all files and rename path!
+                            //String reqData = String.Format("action=renameFile&usrid={0}&dir={1}&renameTo={2}&", uid, withoutRoot, withoutRoot2);
+                            //Console.WriteLine(request.Onrequest("userFile.php", reqData));
                             break;
+                    }
+
+                    if (!monitorChanges.isLocalMonitoringEnabled && !monitorChanges.isServerMonitoringEnabled)
+                    {
+                        monitorChanges.start_loc();
+                        monitorChanges.start_srv();
                     }
                 }
 
 
+                
             }
             while (queue.Count() != 0);
         }
@@ -154,21 +172,39 @@ namespace Mobideskv2
 
         private static void serverToLocal()
         {
+            ftp ftp = new ftp();
             do{
-                String[] q = queueFrmServer.Dequeue().Split('?');
+                String[] q = queueFrmServer.Dequeue().Split(':');
                 String changetype = q[0];
                 String dir =  q[1];
                 String oldDir = q[2];
 
+                    Console.WriteLine(changetype);
+
                 switch(changetype){
                     case "ctd":
-
+                        String path = Path.Combine(Properties.Settings.Default.directorypath,dir);
+                        ftp.download(dir,path);
                     break;
 
                     case "rnm":
+                        oldDir =Properties.Settings.Default.directorypath +oldDir;
+                        dir = Properties.Settings.Default.directorypath+ dir;
+                        Console.WriteLine("Old dir: "+oldDir+" New dir: "+dir);
+                        if(File.Exists(oldDir)){
+                            Console.WriteLine("File exists. Rename file: "+oldDir+" To: "+dir);
+                            File.Move(oldDir,dir);
+                        }
+
                     break;
 
                     case "dlt":
+                        dir = Properties.Settings.Default.directorypath + dir;
+                        Console.WriteLine("Delete file: "+dir);
+                        if(File.Exists(dir)){
+                            Console.WriteLine("File exists. Delete file");
+                            File.Delete(dir);
+                        }
                     break;
 
                     case "updt":
