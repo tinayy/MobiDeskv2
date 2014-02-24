@@ -60,6 +60,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Forms" />
@@ -83,6 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="actions.cs" />
     <Compile Include="checkConn.cs" />
     <Compile Include="connectionStrings.cs" />
     <Compile Include="ftp.cs" />
@@ -97,9 +99,6 @@
       <DependentUpon>notifyTray.xaml</DependentUpon>
     </Compile>
     <Compile Include="objects.cs" />
-    <Compile Include="Page1.xaml.cs">
-      <DependentUpon>Page1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="bind.cs" />
     <Compile Include="userdevice.cs" />
     <Compile Include="sync.cs" />
@@ -131,10 +130,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="notifyTray.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Page1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -221,6 +216,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="imgs\_icon30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\minimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\mobidesk_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />

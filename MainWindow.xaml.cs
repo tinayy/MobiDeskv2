@@ -21,6 +21,7 @@ using System.Net.NetworkInformation;
 
 
 
+
 namespace Mobideskv2
 {
     /// <summary>
@@ -57,6 +58,15 @@ namespace Mobideskv2
             watcher.Deleted += new FileSystemEventHandler(watcher_Deleted);
             watcher.Renamed += new RenamedEventHandler(watcher_Renamed);
             //watcher.EnableRaisingEvents = true;
+            NotifyIcon = new System.Windows.Forms.NotifyIcon();
+           //NotifyIcon.Icon = new System.Drawing.Icon("imgs/mobidesk_icon.ico");
+            var path = "../../imgs/mobidesk_icon.ico";
+            NotifyIcon.BalloonTipText = "HAHAHA";
+            NotifyIcon.Icon = new System.Drawing.Icon(path);
+            NotifyIcon.Click += new EventHandler(NotifyIcon_Click);
+            
+            
+            
 
             _rcs = new bind();
             this.DataContext = _rcs;
@@ -71,6 +81,7 @@ namespace Mobideskv2
         private BackgroundWorker update = new BackgroundWorker();
         private System.Windows.Forms.FolderBrowserDialog browserdialog = new System.Windows.Forms.FolderBrowserDialog();
         private messageBox msgbox = new messageBox();
+        private System.Windows.Forms.NotifyIcon NotifyIcon;
       
         private initset ini = new initset();
         private userdevice dvc = new userdevice();
@@ -111,7 +122,17 @@ namespace Mobideskv2
                 
                 //pane.SelectedItem = settings_pane;
             }
+           
+            NotifyIcon.Visible = true;
+            NotifyIcon.ShowBalloonTip(5000);
             
+        }
+
+        private void NotifyIcon_Click(object sender, EventArgs e)
+        {
+            if(this.WindowState== WindowState.Minimized){
+                this.WindowState = WindowState.Normal;
+            }
         }
 
         private void hide_Click(object sender, RoutedEventArgs e)

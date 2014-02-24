@@ -307,10 +307,14 @@
         </Border.Effect>
 
         <StackPanel Orientation="Vertical" Background="White">
-            <DockPanel Height="35" LastChildFill="False" Background="#FFF9F9F9" MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
-                
-                <Button DockPanel.Dock="Right" Content="-" FontSize="20" Width="30" FontWeight="ExtraBlack" Foreground="#FF3C3C3C" 
-                        Background="Transparent" BorderBrush="{x:Null}" Margin="0,0,10,0" Click="hide_Click"/>
+            <DockPanel Height="25" LastChildFill="False" Background="#FFE4E2E2" MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
+
+                <Button DockPanel.Dock="Right" Content="" FontSize="20" Width="30" FontWeight="ExtraBlack" Foreground="#FF3C3C3C" 
+                        VerticalContentAlignment="Center" BorderBrush="{x:Null}" Margin="0,0,5,0" Click="hide_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="imgs/minimize.png" Stretch="None"/>
+                    </Button.Background>
+                </Button>
             </DockPanel>
             <DockPanel Height="40">
                 <Label MaxWidth="30" MinWidth="30" Margin="10,0,0,0" >
@@ -329,7 +333,7 @@
                     </Label.Foreground>
                 </Label>
                 <Button x:Name="menu" Cursor="Hand" DockPanel.Dock="Right"
-                        HorizontalAlignment="Right" Margin="0,0,10,0" 
+                        HorizontalAlignment="Right" Margin="0,0,8,0" 
                         Click="menu_Click" BorderBrush="{x:Null}"
                         MouseRightButtonDown="menu_MouseRightButtonDown"
                         ContextMenuService.IsEnabled="False" RenderTransformOrigin="0.5,0.5" Width="24" MaxWidth="35">
@@ -367,8 +371,8 @@
                 </Button>
             </DockPanel>
             <Separator Height="6" Margin="0,0" Background="#FF09AAE6" />
-            <TabControl x:Name="pane" Height="312" BorderBrush="{x:Null}" Padding="0">
-                
+            <TabControl x:Name="pane" Height="322" BorderBrush="{x:Null}" Padding="0">
+
                 <TabItem x:Name="settings_pane" Header="Settings" Visibility="Collapsed" Padding="6,2" BorderBrush="{x:Null}">
                     <Grid Background="White">
                         <StackPanel Orientation="Vertical" >
@@ -376,7 +380,7 @@
                                 <Label Content="Settings" Height="35" 
                                    FontSize="18" Foreground="#FF7FB017" 
                                    FontFamily="Roboto Light" Margin="10,0,5,0" DockPanel.Dock="Left" />
-                                </DockPanel>
+                            </DockPanel>
                             <Label Content="Folder Directory" FontFamily="Roboto Light"
                                    Foreground="#FF504f4f" Margin="30,5,0,0"
                                    FontSize="14"
@@ -420,9 +424,9 @@
             	Content="{Binding ufname, Source={x:Static p:Settings.Default}}" 
             	Foreground="#FF6A6A6A" FontSize="18" Padding="10,10,10,5" DockPanel.Dock="Left"
                        Margin="0,5,10,0" VerticalContentAlignment="Center"  HorizontalAlignment="Left"/>
-                                
+
                             </DockPanel>
-                            
+
 
                             <Label Content="{Binding usertype, Source={x:Static p:Settings.Default}}" HorizontalAlignment="Left" FontFamily="Roboto Light"
                                Foreground="#32afd3" Margin="5,15,0,0" VerticalAlignment="Top" FontSize="20" Padding="5,5,5,0"
@@ -449,7 +453,7 @@
 
                             <StackPanel Height="40" Background="#FFECECEC" Orientation="Horizontal">
                                 <Label Background="#FF2DBFEA" Content="Last Update" VerticalContentAlignment="Center" Foreground="White" FontFamily="Roboto Light" FontSize="12" Padding="12"/>
-                                <Label Content="{Binding lastupdate, Source={x:Static p:Settings.Default}}" VerticalContentAlignment="Center" Padding="10" Background="#FFF3F3F3" Foreground="#FF4F4F4F"/>
+                                <Label Content="{Binding lastupdate, Source={x:Static p:Settings.Default}}" VerticalContentAlignment="Center" Padding="10" Background="#FFDFECF0" Foreground="#FF4F4F4F"/>
                             </StackPanel>
 
                             <StackPanel x:Name="updatePanel" Height="40" Orientation="Horizontal" Visibility="Collapsed">
@@ -469,7 +473,7 @@
                                 <Label Content="Account" Height="35" VerticalContentAlignment="Center"
                                    FontSize="18" Foreground="#a5ce4e" 
                                    FontFamily="Roboto Light"  DockPanel.Dock="Left"/>
-                               
+
                             </DockPanel>
                             <DockPanel>
                                 <Label Content="Personal Information" Margin="5,0,0,0" FontFamily="Roboto Light" Foreground="#FF9E9D9D" FontSize="14" 

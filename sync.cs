@@ -133,20 +133,9 @@ namespace Mobideskv2
                         long size = fileinfo.Length;
                         Console.WriteLine("File size: " + size);
                         if(size<frsize()){
+                            String file = f.Replace("\\", "\\\\");
                             Console.WriteLine("Upload: " + fl + "\nTo:" + f);
-                            if (ftp.upload(fl, f))
-                            {
-                                Console.WriteLine("Upload Successful -- Update DB now");
-                                if (uploadtoDb(f, size))
-                                {
-                                    
-                                    log.writeLog("Uploaded-----"+fl);
-                                    Console.WriteLine("Add to size: " + size);
-                                    initset upsize = new initset();
-                                    upsize.updatesize(size);
-                                    Properties.Settings.Default.filecount++;
-                                }
-                            }
+                            actions.UploadFile(fl,file);
                         }
                         else
                         {
@@ -168,7 +157,6 @@ namespace Mobideskv2
             try
             {
                 String uid = Properties.Settings.Default.uid;
-                file = file.Replace("\\","\\\\");
                 Console.WriteLine("Dir to db: " + file);
                 String reqData = String.Format("action=addFile&usrid={0}&dir={1}&fileSize={2}",uid,file,size);
                 Console.WriteLine(request.Onrequest("userFile.php",reqData));
