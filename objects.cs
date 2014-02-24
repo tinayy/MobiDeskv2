@@ -150,6 +150,7 @@ namespace Mobideskv2
                             String withoutRoot2 = fileInf.Name;
                             Console.WriteLine("Folder to rename: " + withoutRoot + "\nRename To: " + withoutRoot2);
                             ftp.rename(withoutRoot2, withoutRoot);
+                            //check if folder has files
                             //get all files and rename path!
                             //String reqData = String.Format("action=renameFile&usrid={0}&dir={1}&renameTo={2}&", uid, withoutRoot, withoutRoot2);
                             //Console.WriteLine(request.Onrequest("userFile.php", reqData));

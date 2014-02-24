@@ -307,37 +307,71 @@
         </Border.Effect>
 
         <StackPanel Orientation="Vertical" Background="White">
-            <DockPanel Height="47" LastChildFill="False" Background="#FFFDFDFD" MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
-                <Image  DockPanel.Dock="Left" VerticalAlignment="Center" HorizontalAlignment="Left" 
-                       Width="133" Source="imgs/headIcon.png" Margin="0,7" RenderTransformOrigin="0.5,0.5">
-                    <Image.OpacityMask>
-                        <ImageBrush ImageSource="imgs/headIcon.png">
+            <DockPanel Height="35" LastChildFill="False" Background="#FFF9F9F9" MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
+                
+                <Button DockPanel.Dock="Right" Content="-" FontSize="20" Width="30" FontWeight="ExtraBlack" Foreground="#FF3C3C3C" 
+                        Background="Transparent" BorderBrush="{x:Null}" Margin="0,0,10,0" Click="hide_Click"/>
+            </DockPanel>
+            <DockPanel Height="40">
+                <Label Content="MobiDesk" VerticalContentAlignment="Center" Background="{x:Null}" FontFamily="Roboto" FontSize="15" Margin="10,0,0,0">
+                    <Label.Foreground>
+                        <LinearGradientBrush EndPoint="0,1" StartPoint="1,0">
+                            <GradientStop Color="#FF1791BF" Offset="1"/>
+                            <GradientStop Color="#FF6CBAD6"/>
+                            <GradientStop Color="#FF0584B4" Offset="0.5"/>
+                            <GradientStop Color="#FF68B8D6" Offset="0.483"/>
+                        </LinearGradientBrush>
+                    </Label.Foreground>
+                </Label>
+                <Button x:Name="menu" Cursor="Hand" DockPanel.Dock="Right"
+                        HorizontalAlignment="Right" Margin="0,0,10,0" 
+                        Click="menu_Click" BorderBrush="{x:Null}"
+                        MouseRightButtonDown="menu_MouseRightButtonDown"
+                        ContextMenuService.IsEnabled="False" RenderTransformOrigin="0.5,0.5" Width="24" MaxWidth="35">
+
+                    <Button.Background>
+                        <ImageBrush ImageSource="imgs/settings.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
                                 <TransformGroup>
-                                    <ScaleTransform ScaleY="1" ScaleX="1"/>
-                                    <SkewTransform AngleY="0" AngleX="0"/>
-                                    <RotateTransform Angle="0"/>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                    <RotateTransform CenterY="0.5" CenterX="0.5"/>
                                     <TranslateTransform/>
                                 </TransformGroup>
                             </ImageBrush.RelativeTransform>
                         </ImageBrush>
-                    </Image.OpacityMask>
-                </Image>
-                <Button DockPanel.Dock="Right" Content="-" FontSize="30" FontWeight="ExtraBlack" Foreground="#FF3C3C3C" 
-                        Background="Transparent" BorderBrush="{x:Null}" Margin="0,0,10,0" Click="hide_Click"/>
+                    </Button.Background>
+                    <Button.ContextMenu>
+                        <ContextMenu Background="White"  BorderBrush="#FF69AEC9" 
+                                     HorizontalAlignment="Right" Width="150" 
+                                     Margin="0,0,15,0" Padding="0,20,0,20">
+                            <MenuItem Background="White" Header="Home" Foreground="#FF1682AB" 
+                                      BorderBrush="Transparent" FontSize="14" StaysOpenOnClick="False"
+                                      FontFamily="Segoe UI" Padding="0,10,0,10"  Click="home_Click"/>
+                            <MenuItem Background="White" Header="Account" Foreground="#FF1682AB" 
+                                      BorderBrush="Transparent" FontSize="14" StaysOpenOnClick="False"
+                                      FontFamily="Segoe UI" Padding="0,10,0,10"  Click="account_Click"/>
+                            <MenuItem Header="Settings" Foreground="#FF1682AB" 
+                                      BorderBrush="Transparent" FontSize="14" StaysOpenOnClick="False"
+                                      FontFamily="Segoe UI" Padding="0,10,0,10" Click="settings_Click" />
+                            <MenuItem Header="Help" Foreground="#FF1682AB" 
+                                      BorderBrush="Transparent" FontSize="14" StaysOpenOnClick="False"
+                                      FontFamily="Segoe UI" Padding="0,10,0,10"  Click="help_Click"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
             </DockPanel>
-
-            <TabControl x:Name="pane" Height="346" BorderBrush="{x:Null}" Padding="0">
+            <Separator Height="6" Margin="0,0" Background="#FF09AAE6" />
+            <TabControl x:Name="pane" Height="312" BorderBrush="{x:Null}" Padding="0">
+                
                 <TabItem x:Name="settings_pane" Header="Settings" Visibility="Collapsed" Padding="6,2" BorderBrush="{x:Null}">
                     <Grid Background="White">
                         <StackPanel Orientation="Vertical" >
-                            <DockPanel Margin="0,20,0,10" >
+                            <DockPanel Margin="0,10,0,5" >
                                 <Label Content="Settings" Height="35" 
-                                   FontSize="18" Foreground="#FF299AB6" 
+                                   FontSize="18" Foreground="#FF7FB017" 
                                    FontFamily="Roboto Light" Margin="10,0,5,5" DockPanel.Dock="Left" />
-                                <Label Content="x" FontFamily="Roboto" DockPanel.Dock="Right" HorizontalAlignment="Right"
-                                       Margin="0,0,15,0" FontSize="18" Foreground="#FFAEA9A9" Cursor="Hand" MouseLeftButtonUp="Label_MouseLeftButtonUp"/>
-                            </DockPanel>
+                                </DockPanel>
                             <Label Content="Folder Directory" FontFamily="Roboto Light"
                                    Foreground="#FF504f4f" Margin="30,5,0,0"
                                    FontSize="14"
@@ -379,50 +413,14 @@
                             <DockPanel>
                                 <Label x:Name="name_lbl" 
             	Content="{Binding ufname, Source={x:Static p:Settings.Default}}" 
-            	Foreground="#FF3C3C3C" FontSize="18" Padding="10,10,10,10" DockPanel.Dock="Left"
+            	Foreground="#FF6A6A6A" FontSize="18" Padding="10,10,10,10" DockPanel.Dock="Left"
                        Margin="0,5,10,5" VerticalContentAlignment="Center"  HorizontalAlignment="Left"/>
-                                <Button x:Name="menu" Cursor="Hand" DockPanel.Dock="Right"
-                        HorizontalAlignment="Right" Margin="0,0,10,0" 
-                        Click="menu_Click" BorderBrush="{x:Null}"
-                        MouseRightButtonDown="menu_MouseRightButtonDown"
-                        ContextMenuService.IsEnabled="False" RenderTransformOrigin="0.5,0.5" Width="29">
-
-                                    <Button.Background>
-                                        <ImageBrush ImageSource="imgs/downarrow.png" Stretch="Uniform">
-                                            <ImageBrush.RelativeTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                                                    <RotateTransform CenterY="0.5" CenterX="0.5"/>
-                                                    <TranslateTransform/>
-                                                </TransformGroup>
-                                            </ImageBrush.RelativeTransform>
-                                        </ImageBrush>
-                                    </Button.Background>
-                                    <Button.ContextMenu>
-                                        <ContextMenu Background="White"  BorderBrush="#FF69AEC9" 
-                                     HorizontalAlignment="Right" Width="150" 
-                                     Margin="0,0,15,0" Padding="0,20,0,20">
-                                            <MenuItem Background="White" Header="Home" Foreground="#FF1682AB" 
-                                      BorderBrush="Transparent" FontSize="14" StaysOpenOnClick="False"
-                                      FontFamily="Segoe UI" Padding="0,10,0,10"  Click="home_Click"/>
-                                            <MenuItem Background="White" Header="Account" Foreground="#FF1682AB" 
-                                      BorderBrush="Transparent" FontSize="14" StaysOpenOnClick="False"
-                                      FontFamily="Segoe UI" Padding="0,10,0,10"  Click="account_Click"/>
-                                            <MenuItem Header="Settings" Foreground="#FF1682AB" 
-                                      BorderBrush="Transparent" FontSize="14" StaysOpenOnClick="False"
-                                      FontFamily="Segoe UI" Padding="0,10,0,10" Click="settings_Click" />
-                                            <MenuItem Header="Help" Foreground="#FF1682AB" 
-                                      BorderBrush="Transparent" FontSize="14" StaysOpenOnClick="False"
-                                      FontFamily="Segoe UI" Padding="0,10,0,10"  Click="help_Click"/>
-                                        </ContextMenu>
-                                    </Button.ContextMenu>
-                                </Button>
+                                
                             </DockPanel>
-                            <Separator Height="6" Margin="0,0" Background="#FF09AAE6"/>
+                            
 
                             <Label Content="{Binding usertype, Source={x:Static p:Settings.Default}}" HorizontalAlignment="Left" FontFamily="Roboto Light"
-                               Foreground="#32afd3" Margin="5,25,0,0" VerticalAlignment="Top" FontSize="20" Padding="5,5,5,0"
+                               Foreground="#32afd3" Margin="5,15,0,0" VerticalAlignment="Top" FontSize="20" Padding="5,5,5,0"
                                />
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{Binding total, Source={x:Static p:Settings.Default}}" Margin="5,5,0,0" FontFamily="Roboto Light"
@@ -441,10 +439,13 @@
                                        FontSize="20" Foreground="#818181" Padding="0,0,5,5"
                                        />
                             </StackPanel>
-                            <ProgressBar Margin="0,5,0,10" Height="12" Foreground="#FF30B3E4" Background="#FFE8E8E8" BorderBrush="#FFE1E3E4" Value="{Binding perc, Source={x:Static p:Settings.Default}}" />
+                            <ProgressBar Margin="0,5,0,5" Height="12" Foreground="#FF30B3E4" Background="#FFE8E8E8" BorderBrush="#FFE1E3E4" Value="{Binding perc, Source={x:Static p:Settings.Default}}" />
 
 
-                            <DockPanel Height="40" LastChildFill="False" Background="White"/>
+                            <StackPanel Height="40" Background="#FFECECEC" Orientation="Horizontal">
+                                <Label Background="#FF2DBFEA" Content="Last Update" VerticalContentAlignment="Center" Foreground="White" FontFamily="Roboto Light" FontSize="12" Padding="12"/>
+                                <Label Content="{Binding lastupdate, Source={x:Static p:Settings.Default}}" VerticalContentAlignment="Center" Padding="10" Background="#FFF3F3F3" Foreground="#FF4F4F4F"/>
+                            </StackPanel>
 
                             <StackPanel x:Name="updatePanel" Height="40" Orientation="Horizontal" Visibility="Collapsed">
                                 <Label Content="Changes on your files" VerticalContentAlignment="Center" Foreground="#595858"
@@ -459,13 +460,11 @@
                 <TabItem x:Name="account_pane" Header="Settings" Visibility="Collapsed" Padding="6,2" BorderBrush="{x:Null}">
                     <Grid Background="White">
                         <StackPanel Orientation="Vertical" Margin="5,5,5,0">
-                            <DockPanel Margin="5,20,5,15">
+                            <DockPanel Margin="5,10,5,15">
                                 <Label Content="Account" Height="35" VerticalContentAlignment="Center"
-                                   FontSize="18" Foreground="#FF299AB6" 
+                                   FontSize="18" Foreground="#a5ce4e" 
                                    FontFamily="Roboto Light"  DockPanel.Dock="Left"/>
-                                <Label Content="x" FontFamily="Roboto" DockPanel.Dock="Right" HorizontalAlignment="Right"
-                                       Margin="0,0,10,0" FontSize="18" Foreground="#FFAEA9A9" Cursor="Hand" MouseLeftButtonUp="Label_MouseLeftButtonUp"/>
-
+                               
                             </DockPanel>
                             <DockPanel>
                                 <Label Content="Personal Information" Margin="5,0,0,0" FontFamily="Roboto Light" Foreground="#FF9E9D9D" FontSize="14" 
