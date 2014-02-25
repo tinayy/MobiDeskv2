@@ -11,7 +11,10 @@ namespace Mobideskv2
     {
         static Timer timer_srv;
         static Timer timer_loc;
+        MainWindow mainWin = new MainWindow();
+        static NotificationTray NotiTray = new NotificationTray();
         //private static bool _isTimerEnabled;
+        
         public static bool isServerMonitoringEnabled
         {
             get;
@@ -47,9 +50,13 @@ namespace Mobideskv2
             if(changes.Length>0 && !changes.Contains("")){
                 stop_srv();
                 stop_loc();
-                Console.WriteLine("There are changes");
+                Console.WriteLine("There are changes on server");
                 QueueChanges(changes);
-                objects.processQueue("stl");
+                
+                if (Properties.Settings.Default.autoUpdate)
+                {
+                    objects.processQueue("stl");
+                }
             }
             else
             {
@@ -96,7 +103,12 @@ namespace Mobideskv2
                 monitorChanges.stop_loc();
                 monitorChanges.stop_srv();
                 Console.WriteLine("Changes on local");
-                objects.processQueue("lts");
+
+                if(Properties.Settings.Default.autoUpdate){
+                    objects.processQueue("lts");
+                }
+                
+                
                 //MainWindow mw = new MainWindow();
                 //mw.updatePanelVisible(1);
             }

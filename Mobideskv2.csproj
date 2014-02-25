@@ -49,6 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\net45\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -95,8 +96,8 @@
       <DependentUpon>messageBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="monitorChanges.cs" />
-    <Compile Include="notifyTray.xaml.cs">
-      <DependentUpon>notifyTray.xaml</DependentUpon>
+    <Compile Include="NotificationTray.xaml.cs">
+      <DependentUpon>NotificationTray.xaml</DependentUpon>
     </Compile>
     <Compile Include="objects.cs" />
     <Compile Include="bind.cs" />
@@ -129,7 +130,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="notifyTray.xaml">
+    <Page Include="NotificationTray.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

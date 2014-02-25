@@ -57,16 +57,22 @@ namespace Mobideskv2
             watcher.Created += new FileSystemEventHandler(watcher_Created);
             watcher.Deleted += new FileSystemEventHandler(watcher_Deleted);
             watcher.Renamed += new RenamedEventHandler(watcher_Renamed);
-            //watcher.EnableRaisingEvents = true;
+            
             NotifyIcon = new System.Windows.Forms.NotifyIcon();
-           //NotifyIcon.Icon = new System.Drawing.Icon("imgs/mobidesk_icon.ico");
+            Contextmenu = new System.Windows.Forms.ContextMenu();
+            MenuItem1 = new System.Windows.Forms.MenuItem();
+            //add menuItem to Context Menu
+            Contextmenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[]{MenuItem1});
+
+            MenuItem1.Index = 0;
+            MenuItem1.Text = "E&xit";
+            MenuItem1.Click += new EventHandler(MenuItem1_Click);
+           
             var path = "../../imgs/mobidesk_icon.ico";
-            NotifyIcon.BalloonTipText = "HAHAHA";
+            
             NotifyIcon.Icon = new System.Drawing.Icon(path);
-            NotifyIcon.Click += new EventHandler(NotifyIcon_Click);
-            
-            
-            
+            NotifyIcon.Click += new EventHandler(NotifyIcon_MouseClick);
+            NotifyIcon.ContextMenu = Contextmenu;
 
             _rcs = new bind();
             this.DataContext = _rcs;
@@ -82,6 +88,9 @@ namespace Mobideskv2
         private System.Windows.Forms.FolderBrowserDialog browserdialog = new System.Windows.Forms.FolderBrowserDialog();
         private messageBox msgbox = new messageBox();
         private System.Windows.Forms.NotifyIcon NotifyIcon;
+        private System.Windows.Forms.ContextMenu Contextmenu;
+        private System.Windows.Forms.MenuItem MenuItem1;
+        private static NotificationTray nt = new NotificationTray();
       
         private initset ini = new initset();
         private userdevice dvc = new userdevice();
@@ -119,20 +128,29 @@ namespace Mobideskv2
                 MessageBox.Show(Properties.Settings.Default.total + " "+Properties.Settings.Default.fsizeunit);
                 update.RunWorkerAsync("0");
                 watcher.Path = Properties.Settings.Default.directorypath.Replace("\\", "\\\\");
+                NotifyIcon.Visible = true;
+                this.WindowState = WindowState.Minimized;
+                
                 
                 //pane.SelectedItem = settings_pane;
             }
-           
-            NotifyIcon.Visible = true;
-            NotifyIcon.ShowBalloonTip(5000);
+
+            
             
         }
 
-        private void NotifyIcon_Click(object sender, EventArgs e)
+        private void NotifyIcon_MouseClick(object sender, EventArgs e)
         {
             if(this.WindowState== WindowState.Minimized){
                 this.WindowState = WindowState.Normal;
             }
+
+            
+        }
+
+        private void MenuItem1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Oh my");
         }
 
         private void hide_Click(object sender, RoutedEventArgs e)
@@ -160,6 +178,8 @@ namespace Mobideskv2
         private void unlink_Click(object sender, RoutedEventArgs e)
         {
             ini.settings("clearSet","");
+            monitorChanges.stop_loc();
+            monitorChanges.stop_srv();
             dvc.unlinkDevice();
             new Login().Show();
             this.Close();
@@ -268,7 +288,6 @@ namespace Mobideskv2
         private void updateCompleted()
         {
             _rcs.status = "Sync Completed";
-            MessageBox.Show("Done");
             watcher.EnableRaisingEvents = true;
             //updatePanelVisible(0);
             sync.date();
@@ -291,6 +310,8 @@ namespace Mobideskv2
             {
                 Console.WriteLine("Local monitoring is currently enabled");
             }
+            NotifyIcon.BalloonTipText = _rcs.status;
+            NotifyIcon.ShowBalloonTip(5000);
           
         }
 
@@ -308,10 +329,18 @@ namespace Mobideskv2
                 {
                     Properties.Settings.Default.directorypath = directorypath.Text + "\\Mobidesk";
                 }
-               
+
                 Properties.Settings.Default.computername = compname.Text;
-                Properties.Settings.Default.Save();
+                
             }
+            if(autoUpdate.IsChecked==true){
+                Properties.Settings.Default.autoUpdate = true;
+            }
+            else
+            {
+                Properties.Settings.Default.autoUpdate = false;
+            }
+                Properties.Settings.Default.Save();
             
         }
 
@@ -408,10 +437,15 @@ namespace Mobideskv2
         private void status_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             
-                MessageBox.Show("HEHE");
-//stat_action.Content = "Pause ||";
+              
+                //stat_action.Content = "Pause ||";
               //  stat_action.Visibility = Visibility.Visible;
             
+        }
+
+        public static void showNotificationTray(String msg)
+        {
+           
         }
         
     }

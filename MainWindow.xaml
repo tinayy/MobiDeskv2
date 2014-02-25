@@ -5,7 +5,7 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         gif:ImageBehavior.AnimateInDesignMode="True"
         Title="MainWindow" Height="432" Width="288" WindowStyle="None" BorderThickness="1" ResizeMode="NoResize" Loaded="Window_Loaded" 
-        AllowsTransparency="True" Background="{x:Null}" Opacity="0.97"  >
+        AllowsTransparency="True" Background="{x:Null}" Opacity="0.98"   >
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -383,12 +383,12 @@
                             </DockPanel>
                             <Label Content="Folder Directory" FontFamily="Roboto Light"
                                    Foreground="#FF504f4f" Margin="30,5,0,0"
-                                   FontSize="14"
+                                   FontSize="12"
                                    />
-                            <TextBox x:Name="directorypath" Height="30" Width="200" TextWrapping="Wrap"
+                            <TextBox x:Name="directorypath" Height="25" Width="200" TextWrapping="Wrap"
                                      HorizontalAlignment="Center" VerticalAlignment="Top" 
                                      VerticalContentAlignment="Center" Padding="5"
-                                     Text="" FontFamily="Roboto Light" />
+                                     Text="" FontFamily="Roboto Light" FontSize="12" Foreground="#FF504f4f" />
                             <Button x:Name="browse" Height="30" HorizontalAlignment="Right"
                                         Margin="0,5,35,0" Content="Browse" FontSize="16"
                                         BorderBrush="{x:Null}" Background="{x:Null}"
@@ -396,12 +396,13 @@
 
                             <Label Content="Computer Name" FontFamily="Roboto Light"
                                    Foreground="#FF504f4f" Margin="30,-5,0,0"
-                                   FontSize="14"/>
-                            <TextBox x:Name="compname" Height="30" Width="200" TextWrapping="Wrap"
+                                   FontSize="12"/>
+                            <TextBox x:Name="compname" Height="25" Width="200" TextWrapping="Wrap"
                                      HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0"
                                      VerticalContentAlignment="Center" Padding="5" FontFamily="Roboto Light"
-                                     Text="" />
-                            <Label x:Name="prompt" Content="prompt" FontFamily="Segoe UI"
+                                     Text="" FontSize="12" Foreground="#FF504f4f" />
+                            <CheckBox x:Name="autoUpdate" Content="Auto-Update Changes" Margin="35,15,0,0" FontFamily="Roboto Light" FontSize="12" Foreground="#FF504f4f"/>
+                            <Label x:Name="prompt" Content="prompt" FontFamily="Roboto Light"
                                    Foreground="#FF535353" Margin="0,5,0,0" Visibility="Collapsed"
                                    FontSize="12" HorizontalAlignment="Center"/>
                             <Image x:Name="loader" Visibility="Hidden" gif:ImageBehavior.RepeatBehavior="Forever"
@@ -453,7 +454,7 @@
 
                             <StackPanel Height="40" Background="#FFECECEC" Orientation="Horizontal">
                                 <Label Background="#FF2DBFEA" Content="Last Update" VerticalContentAlignment="Center" Foreground="White" FontFamily="Roboto Light" FontSize="12" Padding="12"/>
-                                <Label Content="{Binding lastupdate, Source={x:Static p:Settings.Default}}" VerticalContentAlignment="Center" Padding="10" Background="#FFDFECF0" Foreground="#FF4F4F4F"/>
+                                <Label Content="{Binding lastupdate, Source={x:Static p:Settings.Default}}" VerticalContentAlignment="Center" Padding="10" Background="#FFECECEC" Foreground="#FF4F4F4F"/>
                             </StackPanel>
 
                             <StackPanel x:Name="updatePanel" Height="40" Orientation="Horizontal" Visibility="Collapsed">

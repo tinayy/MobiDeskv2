@@ -34,6 +34,11 @@ namespace Mobideskv2
                     }
                 break;
             }
+
+            if(!monitorChanges.isLocalMonitoringEnabled && !monitorChanges.isServerMonitoringEnabled){
+               // monitorChanges.start_loc();
+               // monitorChanges.start_srv();
+            }
             
             
         }
@@ -103,13 +108,15 @@ namespace Mobideskv2
                         case "rnm":
                             
                             FileInfo fileInf = new FileInfo(newfilename);
+                            String newfile = localFiles.getfilewithoutroot(newfilename);
+                            newfile = newfile.Replace("\\","\\\\");
                             String withoutRoot2 = "\\\\"+fileInf.Name;
                             withoutRoot = withoutRoot.Replace("\\","\\\\");
                             Console.WriteLine("File to rename: " + withoutRoot + "\nRename To: " + withoutRoot2);
                             
                                 ftp.rename(withoutRoot2, withoutRoot);
                             
-                                reqData = String.Format("action=renameFile&usrid={0}&dir={1}&renameTo={2}", uid, withoutRoot, withoutRoot2);
+                                reqData = String.Format("action=renameFile&usrid={0}&dir={1}&renameTo={2}", uid, withoutRoot, newfile);
                                 Console.WriteLine(request.Onrequest("userFile.php", reqData));
                             
                            
@@ -149,6 +156,18 @@ namespace Mobideskv2
                             FileInfo fileInf = new FileInfo(newfilename);
                             String withoutRoot2 = fileInf.Name;
                             Console.WriteLine("Folder to rename: " + withoutRoot + "\nRename To: " + withoutRoot2);
+                            String[] dirFiles = Directory.GetFiles(newfilename);
+                            if(dirFiles.Count()>0){
+                                Console.WriteLine("Folder have filesss!");
+                                foreach(String f in dirFiles){                
+                                    FileInfo fileName = new FileInfo(f);
+                                    String oldDir = withoutRoot+"\\\\"+fileName.Name;
+                                    String newDir = localFiles.getfilewithoutroot(newfilename)+"\\\\"+fileName.Name;
+                                    Console.WriteLine("Old path: "+oldDir+" New Path: "+newDir);
+                                    String reqData = String.Format("action=renameFile&usrid={0}&dir={1}&renameTo={2}&", uid, oldDir, newDir);
+                                    Console.WriteLine(request.Onrequest("userFile.php", reqData));
+                                }
+                            }
                             ftp.rename(withoutRoot2, withoutRoot);
                             //check if folder has files
                             //get all files and rename path!
